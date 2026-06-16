@@ -1,0 +1,275 @@
+:root {
+    --pb-yellow: #FFCC00;
+    --pb-blue: #003063;
+    --pb-purple: #5c2483;
+    --text-dark: #333333;
+    --text-muted: #666666;
+    --error-red: #d32f2f;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    /* Tswira d l-background d l-page */
+    background-image: url('/img/pbbg-SSUZWE5M.jpg');
+    background-size: cover;          
+    
+    /* Had s-tar huwa li bdlnah dba bach n-kahzo tswira l l-yṣar (Left) chwiya */
+    background-position: 25% top;    /* 25% kat-kḥz tswira l l-left, o top kat-khlliha laṣqa f l-foq */
+    
+    background-attachment: scroll;    
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    height: 4px;
+    background-color: var(--pb-purple);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    padding-top: 4px;
+    justify-content: space-between; 
+}
+
+/* ==========================================================================
+   PARTI 1: JIHA D L-LOGIN
+   ========================================================================== */
+.left-section {
+    flex: 1;
+    padding: 80px 40px; 
+    display: flex;
+    align-items: flex-start; 
+    justify-content: center;
+    background-color: transparent; 
+    margin-top: 60px; /* L-card dyal l-login tbqa hbaṭa chwiya perfectly */
+}
+
+.login-card {
+    background-color: var(--pb-yellow);
+    width: 100%;
+    max-width: 460px; 
+    padding: 45px 40px; 
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.custom-logo {
+    max-width: 170px; 
+    height: auto;
+    object-fit: contain;
+}
+
+.login-card h1 {
+    color: var(--pb-blue);
+    font-size: 2.1rem; 
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: var(--pb-blue);
+    font-size: 1rem; 
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--error-red);
+    font-size: 0.9rem; 
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 12px; 
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    font-size: 1.1rem; 
+    outline: none;
+}
+
+.btn-primary {
+    background-color: var(--pb-blue);
+    color: #ffffff;
+    border: none;
+    padding: 13px 32px; 
+    font-size: 1.05rem; 
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-link {
+    color: var(--pb-blue);
+    font-size: 0.95rem; 
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* ==========================================================================
+   PARTI 2: JIHA D L-SIDEBAR (Rj3at laṣqa f l-foq perfectly d l-page)
+   ========================================================================== */
+.right-section {
+    width: 100%;
+    width: 330px; 
+    max-width: 330px;
+    background-color: #ffffff; 
+    display: flex;
+    flex-direction: column;
+    margin-right: 12%; 
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    align-self: stretch; /* Kat-khlli l-sidebar t-jbed mn l-foq ta l-teht automatic */
+    margin-top: 0px;     /* Hiyyedna l-margin bach t-qiss l-foq d l-page perfectly */
+}
+
+.sidebar-content {
+    flex: 1;
+    padding: 40px 24px 28px 24px; /* Hna gaddna l-padding d l-foq d l-ktba */
+}
+
+.sidebar-yellow-footer {
+    background-color: var(--pb-yellow);
+    padding: 24px; 
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-yellow-footer a {
+    color: var(--pb-blue);
+    font-size: 0.88rem; 
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.sidebar-yellow-footer a:hover {
+    text-decoration: underline;
+}
+
+.info-block {
+    margin-bottom: 22px;
+}
+
+.info-block h3 {
+    font-size: 1.05rem; 
+    color: var(--pb-blue); 
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-block p {
+    font-size: 0.88rem; 
+    color: var(--text-dark);
+    line-height: 1.45;
+    margin-bottom: 10px;
+}
+
+.promo-img {
+    width: 100%;
+    height: auto;
+    max-height: 125px; 
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.info-link {
+    color: var(--pb-blue);
+    font-size: 0.88rem;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.block-link {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.separator {
+    border: 0;
+    border-top: 1px solid #eef0f2;
+    margin: 18px 0;
+}
+
+.icon-warning {
+    color: #cca400;
+}
+
+.hidden {
+    display: none;
+}
+
+.error-text {
+    color: var(--error-red);
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #2e7d32;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    z-index: 999;
+}
+
+.toast-hidden {
+    display: none;
+}
+
+/* Responsive grid view updates */
+@media (max-width: 1200px) {
+    .right-section {
+        margin-right: 4%;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .right-section {
+        max-width: calc(100% - 40px);
+        width: auto;
+        margin: 20px auto;
+    }
+}

